@@ -123,7 +123,7 @@ Workflow 完成：3 个 Agent 已通过共享状态完成信息互通。
 ## 5. 文件结构（按作业提交物归类）
 
 ```
-Homework2-Workflow-MVP/
+multi-agent-workflow
 ├── 提交物1_代码/                # 源代码（可直接运行）
 │   ├── llm.py                  # 统一 LLM 客户端（mock + 多个 OpenAI 兼容免费平台）
 │   ├── state.py                # 共享状态 / 消息通信（Blackboard）
