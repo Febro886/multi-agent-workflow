@@ -4,7 +4,7 @@
 
 ## 1. 项目目标
 
-严格按照作业 PPT 要求，实现 **Mini SE 流程**：
+实现一条完整的 **Mini SE 流程**：
 
 ```
 需求 Agent  →  设计 Agent  →  编码 Agent
@@ -50,7 +50,7 @@ flowchart LR
 > 若某个 Key 未填，对应 Agent 会自动降级为 mock 模板，流程仍能跑通。
 > 仍可使用本地 `ollama` 或其它 OpenAI 兼容平台（见 `llm.py` 的 `provider="openai"`）。
 
-> 实测说明：原计划用 DeepSeek 官方（deepseek-chat / reasoner），但该账户实测返回 **402 需付费**，非免费，故弃用，改用智谱的第二个免费模型 `glm-4-air`。选择理由：智谱 / 阿里百炼均国内可访问、注册即送免费额度、OpenAI 兼容易调用，最适合国内学生作业。
+> 实测说明：原计划用 DeepSeek 官方（deepseek-chat / reasoner），但该账户实测返回 **402 需付费**，非免费，故弃用，改用智谱的第二个免费模型 `glm-4-air`。选择理由：智谱 / 阿里百炼均国内可访问、注册即送免费额度、OpenAI 兼容易调用，上手成本低，最适合快速验证。
 
 ## 4. 使用方法
 
@@ -63,7 +63,7 @@ python main.py
 ```
 
 运行时首先进行**环境检测**：分别检查 `DEEPSEEK_API_KEY` / `ZHIPU_API_KEY` / `DASHSCOPE_API_KEY` 是否设置；
-已设置的平台用真实模型生成内容，未设置的对应 Agent 自动降级为 mock 模板并给出提示，流程仍可跑通（满足 PPT「MVP 可运行即可」）。
+已设置的平台用真实模型生成内容，未设置的对应 Agent 自动降级为 mock 模板并给出提示，流程仍可跑通（无 Key 也能开箱跑通）。
 
 运行后根据提示**输入一段产品需求描述**（回车使用默认示例需求），
 三个 Agent 将依次运行，最终产出写入 `output/` 目录：
@@ -74,7 +74,7 @@ python main.py
 
 ### 配置三个国内免费平台（推荐：国内可访问、免费、无需下载软件/大模型）
 
-本项目已把 API Key 存入 `提交物1_代码/.env` 文件，`main.py` 启动时会**自动加载**，无需每次手动 `set`。
+API Key 存入项目根目录的 `.env` 文件，`main.py` 启动时会**自动加载**，无需每次手动 `set`。
 三个 Agent 分别需要以下 Key（注册均免费、国内可访问）：
 
 | 平台 | 注册地址 | 用于 | 环境变量 |
@@ -85,7 +85,7 @@ python main.py
 
 配置步骤：
 1. 在以上三个平台分别注册并创建 API Key（均免费送额度）；
-2. 复制 `提交物1_代码/.env.example` 为 `.env`（若已存在 `.env` 直接编辑即可）；
+2. 复制 `.env.example` 为 `.env`（若已存在 `.env` 直接编辑即可）；
 3. 用记事本打开 `.env`，把三个 `KEY=` 后面填上对应的值；
 4. 重新运行 `python main.py`，检测通过即使用真实模型。
 
@@ -120,38 +120,32 @@ Workflow 完成：3 个 Agent 已通过共享状态完成信息互通。
 
 > 该次运行完整验证了：3 个 Agent 顺序协作、真实模型生成、共享状态传递、端到端跑通。
 
-## 5. 文件结构（按作业提交物归类）
+## 5. 文件结构
 
 ```
 multi-agent-workflow
-├── 提交物1_代码/                # 源代码（可直接运行）
-│   ├── llm.py                  # 统一 LLM 客户端（mock + 多个 OpenAI 兼容免费平台）
-│   ├── state.py                # 共享状态 / 消息通信（Blackboard）
-│   ├── agents.py               # 3 个 Agent：需求 / 设计 / 编码
-│   ├── workflow.py             # 顺序流程编排
-│   ├── main.py                 # 入口（含产出预览、环境检测）
-│   ├── requirements.txt
-│   ├── test_workflow.py        # 自动化可行性测试（12 项检查）
-│   ├── run_test.bat            # 一键运行测试（Windows）
-│   ├── sample_requirements.txt # 测试用需求描述样本
-│   ├── .env                    # 本地密钥（请勿随作业提交；提交时改用 .env.example）
-│   ├── .env.example            # 密钥模板（三个平台 Key）
-│   ├── .gitignore
-│   └── output/                 # 运行产物（需求/设计/代码）
-├── 提交物2_文档/                # 文档
-│   ├── README.md               # 项目说明 + 使用方法 + 实测示例
-│   ├── Design.md               # 设计文档（架构/流程图/Agent 设计/技术选型）
-│   └── TEST.md                 # 测试文档（方法 + 测试数据 + 判定）
-└── 提交物3_演示视频/            # 演示视频（待录制，≤1 分钟，可选）
-    └── 把录制的演示视频放在此文件夹.txt
+├── llm.py                  # 统一 LLM 客户端（mock + 多个 OpenAI 兼容平台）
+├── state.py                # 共享状态 / 消息通信（Blackboard）
+├── agents.py               # 3 个 Agent：需求 / 设计 / 编码
+├── workflow.py             # 顺序流程编排
+├── main.py                 # 入口（含产出预览、环境检测）
+├── test_workflow.py        # 自动化测试（12 项检查）
+├── run_test.bat            # 一键运行测试（Windows）
+├── sample_requirements.txt # 示例需求描述
+├── requirements.txt
+├── .env.example            # 密钥模板（复制为 .env 后填入自己的 Key）
+├── docs/
+│   ├── Design.md           # 设计文档（架构 / 流程图 / Agent 设计 / 技术选型）
+│   └── TEST.md             # 测试文档（方法 + 测试数据 + 判定）
+└── README.md
 ```
 
-> 运行代码：进入 `提交物1_代码` 目录，执行 `pip install -r requirements.txt` 后 `python main.py`。
-> 提交打包时，**不要包含 `提交物1_代码/.env`**（含密钥），用 `.env.example` 代替即可。
+> 运行：在项目根目录执行 `pip install -r requirements.txt` 后 `python main.py`。
+> `.env` 含密钥，已加入 `.gitignore`，切勿提交到公开仓库。
 
-## 6. 对应 PPT 评审要点
+## 6. 设计要点对照
 
-| 评审维度 | 实现情况 |
+| 维度 | 实现情况 |
 |----------|----------|
 | 流程完整性（40%） | Mini SE 流程端到端跑通：需求描述 → 需求 → 设计 → 代码 |
 | Agent 协作（30%） | 3 个 Agent 通过共享状态互通，通信链路由 `history` 记录 |

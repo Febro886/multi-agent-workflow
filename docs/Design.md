@@ -2,7 +2,7 @@
 
 ## 1. 项目概述
 
-严格按照作业 PPT 的「Mini SE 流程」实现 **需求 → 设计 → 代码** 三个 Agent 顺序协作：
+围绕「Mini SE 流程」实现 **需求 → 设计 → 代码** 三个 Agent 顺序协作：
 
 | 方向 | 流程描述 | Agent 组成 |
 |------|----------|------------|
@@ -91,7 +91,7 @@ flowchart LR
 ## 10. 运行方式
 
 ```bash
-cd 提交物1_代码
+cd multi-agent-workflow
 pip install -r requirements.txt
 python main.py          # 默认使用 SiliconFlow 真实模型（需 .env 中配置 Key）
 python test_workflow.py # 自动化可行性测试（12/12，无需网络/Key）
