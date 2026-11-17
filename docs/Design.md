@@ -8,7 +8,7 @@
 |------|----------|------------|
 | **Mini SE 流程** ✅ | 需求 → 设计 → 代码 | 需求 Agent + 设计 Agent + 编码 Agent |
 
-对应 PPT「技术要求」：
+技术要求对照：
 - 至少 2 个 Agent 协作完成完整流程 ✅（实际 3 个）
 - Agent 间消息传递 / 状态共享 ✅
 - 基本流程控制（顺序执行）✅
@@ -66,7 +66,7 @@ flowchart LR
 - **默认采用国内可访问的免费平台「硅基流动 SiliconFlow」**（OpenAI 兼容、注册送免费额度），
   三个 Agent 分别使用其免费模型，实现「3 个免费 Agent 协作」。
 - 若需离线/境外方案，可在 `main.py` 的 `build_agents()` 将 provider 改为 `ollama` / `gemini` / `groq`。
-- 未配置 Key 时自动降级 `mock`，满足 PPT「MVP 可运行即可」。
+- 未配置 Key 时自动降级 `mock`，保证无 Key 也能开箱跑通。
 
 ## 7. 流程控制
 
@@ -79,7 +79,7 @@ flowchart LR
 - 更换/新增引擎：在 `LLMClient` 增加 provider，无需改动 Agent 与编排代码。
 - 修改流程：调整 `Workflow.run` 的执行顺序或加入分支/循环。
 
-## 9. 对应 PPT 评审要点
+## 9. 设计要点对照
 
 | 评审维度 | 实现情况 |
 |----------|----------|
