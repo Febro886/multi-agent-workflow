@@ -1,1 +1,2 @@
-requests>=2.31.0
+# 本项目仅使用 Python 标准库（urllib / json / os），无需安装任何第三方依赖，
+# 配置好 .env 中的 ZHIPU_API_KEY 后直接运行 python main.py 即可。
