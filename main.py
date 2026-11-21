@@ -29,7 +29,7 @@ _load_env_file()
 
 # 三个不同的免费模型（均经实测免费可用，国内可访问、OpenAI 兼容）。
 # 注：原计划的 DeepSeek 官方（deepseek-chat / reasoner）对该 Key 返回 402 需付费，
-# 故弃用，改为「智谱 AI 两个不同免费模型 + 阿里百炼一个免费模型」，保证三个 Agent 都用免费模型。
+# 故弃用，改为「智谱 AI 三个不同免费模型」，保证三个 Agent 都用免费模型。
 # 若某 Key 未配置，对应 Agent 自动降级为 mock 模板，流程仍能跑通。
 PLATFORMS = [
     {
@@ -57,7 +57,7 @@ PLATFORMS = [
 
 
 def build_agents():
-    """三个 Agent 分别接入三个不同的国内免费平台（每个平台一个免费模型）。"""
+    """三个 Agent 接入智谱 AI 的三个不同免费模型"""
     llms = {}
     for p in PLATFORMS:
         key = os.getenv(p["key_env"])
